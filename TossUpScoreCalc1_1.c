@@ -24,20 +24,20 @@
 | you want to give credit, that's great, but it's not	|
 | required.												|
 +-------------------------------------------------------+  */
-#define NOMAIN   2 //NO means Number Of
-#define NOMID    3
-#define NOBUCKY   3
-#define NOLARGE    4
-#define NOROBOT     3
-#define NOBUCKYOBJS  10
-#define NOLARGEOBJS  4
-#define BTNNEXTTIME  650  //If you hold a button to go to the next item it will auto-repeat after this many MS
-#define BTNLOOPTIME  2000 //If you hold a button to loop through the menu again it will auto-repeat after this many MS
-#define BTNADDTIME  350   //If you hold a button to add or subtract the current value it will auto-repeat after this many MS
-#define MINLOOPTIME  2    //For full vex code, this might be 3 or 4.
-#define MODEINPUT    0
-#define MODEDISPLAY  1
-#define MODERESTART  2
+#define NO_MAIN			2 //NO means Number Of
+#define NO_MID			3
+#define NO_BUCKY			3
+#define NO_LARGE			4
+#define NO_ROBOT			3
+#define NO_BUCKYOBJS		10
+#define NO_LARGEOBJS		4
+#define BTNNEXTTIME		650	//If you hold a button to go to the next item it will auto-repeat after this many MS
+#define BTNLOOPTIME		2000	//If you hold a button to loop through the menu again it will auto-repeat after this many MS
+#define BTNADDTIME		350	//If you hold a button to add or subtract the current value it will auto-repeat after this many MS
+#define MINLOOPTIME		2		//For full vex code, this might be 3 or 4.
+#define MODEINPUT		0
+#define MODEDISPLAY		1
+#define MODERESTART		2
 
 
 bool btnLeft=0;
@@ -46,10 +46,10 @@ bool btnRight=0;
 bool lastBtnLeft=0;
 bool lastBtnCenter=0;
 bool lastBtnRight=0;
-int NOobjectsScored[NOMAIN*NOMID][4]; //See notes below
-//4 is the largest of NOBUCKY, NOLARGE and NOROBOT
+int NOobjectsScored[NO_MAIN*NO_MID][4]; //See notes below
+//4 is the largest of NO_BUCKY, NO_LARGE and NO_ROBOT
 //This array corresponds with pointValues[][] below.
-//Also, I had to use NOmain and NOmid in the same index because robotc does not allow more than 2 indices.
+//Also, I had to use NO_MAIN and NO_MID in the same index because robotc does not allow more than 2 indices.
 char menuMainItem=0;
 char menuMidItem=0;
 char menuBuckyItem=0;
@@ -62,11 +62,11 @@ string lastLine1="";
 string lastLine2="";
 unsigned long timeBtn=0;
 unsigned long timeT1;
-const string menuMain[NOMAIN]=		{"Red","Blue"};										//COLOR
-const string menuMid[NOMID]=		{"Bucky Balls","Large Balls","Robots"};				//TYPE
-const string menuBucky[NOBUCKY]=	{"Middle Zone","Goal Zone","Stashed"};				//Bucky
-const string menuLarge[NOLARGE]=	{"Middle Zone","Goal Zone","Stashed","Hanging"};	//Large
-const string menuRobot[NOROBOT]=	{"Low Hanging","High Hanging","Auton Bonus"};		//Robot
+const string menuMain[NO_MAIN] =		{"Red","Blue"};										//COLOR
+const string menuMid[NO_MID] =		{"Bucky Balls","Large Balls","Robots"};				//TYPE
+const string menuBucky[NO_BUCKY] =	{"Middle Zone","Goal Zone","Stashed"};				//Bucky
+const string menuLarge[NO_LARGE] =	{"Middle Zone","Goal Zone","Stashed","Hanging"};	//Large
+const string menuRobot[NO_ROBOT] =	{"Low Hanging","High Hanging","Auton Bonus"};		//Robot
 const char pointValues[3][4]={
 {1, 2,  5,  0},		//Bucky
 {1, 5,  10, 10},	//Large
@@ -78,13 +78,13 @@ const char pointValues[3][4]={
 void init()
 	{
 	ClearTimer(T1);
-	menuMainItem=0;
-	menuMidItem=0;
-	menuBuckyItem=0;
-	menuLargeItem=0;
-	menuRobotItem=0;
-	mode=MODEINPUT;
-	timeBtn=0;
+	menuMainItem =	0;
+	menuMidItem =	0;
+	menuBuckyItem =	0;
+	menuLargeItem =	0;
+	menuRobotItem =	0;
+	mode =			MODEINPUT;
+	timeBtn =		0;
 	}
 
 
@@ -105,7 +105,8 @@ void input()
 	ClearTimer(T1);
 	//Fake Timers Here
 	timeBtn+=timeT1;
-	if (!btnLeft && !btnCenter && !btnRight && timeBtn<BTNNEXTTIME) timeBtn=BTNNEXTTIME; //See notes below
+	if (!btnLeft && !btnCenter && !btnRight && timeBtn<BTNNEXTTIME)
+		timeBtn = BTNNEXTTIME; //See notes below
 	//If all buttons are released than set timer forward so that no delay is implemented.
 	//This will not work for the emulator, because it has auto repeat on LCD buttons.
 	}
@@ -124,11 +125,11 @@ void process()
 			int tSelectedNum, tMax, tItem; //a prefix of 't' means it is a temporary variable.
 			switch (menuMidItem)
 				{
-				case 0: {tItem=menuBuckyItem; tMax=NOBUCKYOBJS;} break;
-				case 1: {tItem=menuLargeItem; tMax=NOLARGEOBJS;} break;
+				case 0: {tItem=menuBuckyItem; tMax=NO_BUCKYOBJS;} break;
+				case 1: {tItem=menuLargeItem; tMax=NO_LARGEOBJS;} break;
 				case 2: {tItem=menuRobotItem; tMax=2;} break;
 				}
-			tSelectedNum = NOobjectsScored[menuMainItem*NOMID+menuMidItem][tItem];
+			tSelectedNum = NOobjectsScored[menuMainItem*NO_MID+menuMidItem][tItem];
 			if (btnLeft) //SUBTRACT FROM CURRENT ITEM
 				{
 				tSelectedNum--;
@@ -139,19 +140,19 @@ void process()
 				tSelectedNum++;
 				if (tSelectedNum>tMax) tSelectedNum=tMax;
 				}
-			NOobjectsScored[menuMainItem*NOMID+menuMidItem][tItem] = tSelectedNum;
+			NOobjectsScored[menuMainItem*NO_MID+menuMidItem][tItem] = tSelectedNum;
 			}
 		if (timeBtn>=BTNNEXTTIME && btnCenter) //GO TO NEXT ITEM
 			{
 			timeBtn=0;
 			switch (menuMidItem)
 				{
-				case 0: {menuBuckyItem++; if (menuBuckyItem>=NOBUCKY) {menuBuckyItem=0; menuMidItem++;}} break;
-				case 1: {menuLargeItem++; if (menuLargeItem>=NOLARGE) {menuLargeItem=0; menuMidItem++;}} break;
-				case 2: {menuRobotItem++; if (menuRobotItem>=NOROBOT) {menuRobotItem=0; menuMidItem++;}} break;
+				case 0: {menuBuckyItem++; if (menuBuckyItem>=NO_BUCKY) {menuBuckyItem=0; menuMidItem++;}} break;
+				case 1: {menuLargeItem++; if (menuLargeItem>=NO_LARGE) {menuLargeItem=0; menuMidItem++;}} break;
+				case 2: {menuRobotItem++; if (menuRobotItem>=NO_ROBOT) {menuRobotItem=0; menuMidItem++;}} break;
 				}
-			if (menuMidItem>=NOMID) {menuMidItem=0; menuMainItem++;}
-			if (menuMainItem>=NOMAIN) {menuMainItem=0; mode=MODEDISPLAY;}
+			if (menuMidItem>=NO_MID) {menuMidItem=0; menuMainItem++;}
+			if (menuMainItem>=NO_MAIN) {menuMainItem=0; mode=MODEDISPLAY;}
 			}
 		}
 	else if (mode==MODEDISPLAY)
@@ -190,7 +191,7 @@ void processScreen()
 			case 1: {tempString=menuLarge[menuLargeItem]; tempItem=menuLargeItem;} break;
 			case 2: {tempString=menuRobot[menuRobotItem]; tempItem=menuRobotItem;} break;
 			}
-		sprintf(line2,"%s:%1d",tempString,NOobjectsScored[menuMainItem*NOMID+menuMidItem][tempItem]);
+		sprintf(line2,"%s:%1d",tempString,NOobjectsScored[menuMainItem*NO_MID+menuMidItem][tempItem]);
 		}
 	else if (mode==MODEDISPLAY)//If viewing score
 		{
@@ -205,7 +206,7 @@ void processScreen()
 				{
 				for (int l=0; l<4; l++)
 					{
-					tempPoints[j]+=(NOobjectsScored[j*NOMID+k][l])*(pointValues[k][l]);
+					tempPoints[j]+=(NOobjectsScored[j*NO_MID+k][l])*(pointValues[k][l]);
 					}
 				}
 			}
