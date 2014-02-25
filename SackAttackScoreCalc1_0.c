@@ -1,28 +1,28 @@
-/*						 +------------------------------+
-						 | Sack Attack Score Calculator	|
-						 |     Joseph D.  Team 3018		|
-						 |   2013-05-09    2013-05-09	|
+/*                       +------------------------------+
+                         | Sack Attack Score Calculator |
+                         |     Joseph D.  Team 3018     |
+                         |   2013-05-09    2013-05-09   |
 +------------------------+------------------------------+
-|     In this code is a trick to use more than just 4	|
-| timers in robotC. You just declare some unsigned long	|
-| variables (like "timeStart" or "timeRefresh") and add	|
-| the delta time to them every time the code loops.	You	|
+|     In this code is a trick to use more than just 4   |
+| timers in robotC. You just declare some unsigned long |
+| variables (like "timeStart" or "timeRefresh") and add |
+| the delta time to them every time the code loops. You |
 | can have as many of these as you want. They are quite |
-| accurate, but probably not perfect. RobotC should run	|
-| a heavy loop in under 6 MS, so that is the max error	|
-| that the Fake Timer will have. The reason that the	|
-| delta time is added, is so that you can reset the		|
-| fake timer by setting it to 0. E.g. timeStart=0;		|
-|     BTW, the fake timers could backfire if your code	|
-| loops in under 1 MS. The delta time would be 0, which	|
-| would add nothing to the fake timers and then reset	|
-| the real timer. To fix this, a minimum loop time has	|
-| been implemented. Also, minimum loop time keeps PID	|
-| controllers more accurate (because I and D need time	|
-| consistency or the deltatime multiplied in).			|
-|     Feel free to use these tricks in your code. If	|
-| you want to give credit, that's great, but it's not	|
-| required.												|
+| accurate, but probably not perfect. RobotC should run |
+| a heavy loop in under 6 MS, so that is the max error  |
+| that the Fake Timer will have. The reason that the    |
+| delta time is added, is so that you can reset the     |
+| fake timer by setting it to 0. E.g. timeStart=0;      |
+|     BTW, the fake timers could backfire if your code  |
+| loops in under 1 MS. The delta time would be 0, which |
+| would add nothing to the fake timers and then reset   |
+| the real timer. To fix this, a minimum loop time has  |
+| been implemented. Also, minimum loop time keeps PID   |
+| controllers more accurate (because I and D need time  |
+| consistency or the deltatime multiplied in).          |
+|     Feel free to use these tricks in your code. If    |
+| you want to give credit, that's great, but it's not   |
+| required.                                             |
 +-------------------------------------------------------+  */
 #define NO_COLOR   2 //NO means Number Of
 #define NO_OBJECT    3
@@ -63,18 +63,18 @@ string lastLine1="";
 string lastLine2="";
 unsigned long timeBtn=0;
 unsigned long timeT1;
-const string menuColor[NO_COLOR] =		{"Red","Blue"};							//COLOR
-const string menuObject[NO_OBJECT] =	{"Sacks","Bonus sacks","Alliance"};		//OBJECT
-const string menuSackPos[NO_SACKS] =	{"Starting tile","Trough","High goal"};	//Bucky
-const string menuBonusPos[NO_BONUS] =	{"Starting tile","Trough","High goal"};	//Large
-const string menuRobotPos[NO_ROBOT] =	{"Parking Bonus","Auton Bonus"};		//Robot
+const string menuColor[NO_COLOR] =      {"Red","Blue"};                         //COLOR
+const string menuObject[NO_OBJECT] =    {"Sacks","Bonus sacks","Alliance"};     //OBJECT
+const string menuSackPos[NO_SACKS] =    {"Starting tile","Trough","High goal"}; //Bucky
+const string menuBonusPos[NO_BONUS] =   {"Starting tile","Trough","High goal"}; //Large
+const string menuRobotPos[NO_ROBOT] =   {"Parking Bonus","Auton Bonus"};        //Robot
 const char pointValues[3][3]={
-{1,	5,	10},	//Sacks
-{6,	10,	15},	//Bonus
-{5,	10,	10}};	//Robot
+	{1, 5,  10},    //Sacks
+	{6, 10, 15},    //Bonus
+	{5, 10, 10}};   //Robot
 
 /*
-	The Function init() initializes and resets.
+    The Function init() initializes and resets.
 */
 void init()
 	{
@@ -90,7 +90,7 @@ void init()
 
 
 /*
-	The Function input() gathers all sensor values
+    The Function input() gathers all sensor values
 values and stores them in variables for later use.
 This is done so that there are no conflicting sensor
 values throughout the code since all sensors are read
@@ -101,7 +101,7 @@ void input()
 	btnLeft   = (bool)(nLCDButtons&1);
 	btnCenter = (bool)(nLCDButtons&2);
 	btnRight  = (bool)(nLCDButtons&4);
-
+	
 	timeT1=time1[T1];
 	ClearTimer(T1);
 	//Fake Timers Here
@@ -112,7 +112,7 @@ void input()
 	}
 
 /*
-	The Function process() precesses the inputs
+    The Function process() precesses the inputs
 and sets variables for outputs.
 */
 void process()

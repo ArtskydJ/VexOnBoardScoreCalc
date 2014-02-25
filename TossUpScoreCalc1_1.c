@@ -1,43 +1,43 @@
 /*						 +------------------------------+
-						 |   Toss Up Score Calculator	|
-						 |     Joseph D.  Team 3018		|
-						 |   2013-04-30    2013-05-01	|
+                         |   Toss Up Score Calculator   |
+                         |     Joseph D.  Team 3018     |
+                         |   2013-04-30    2013-05-01   |
 +------------------------+------------------------------+
-|     In this code is a trick to use more than just 4	|
-| timers in robotC. You just declare some unsigned long	|
-| variables (like "timeStart" or "timeRefresh") and add	|
-| the delta time to them every time the code loops.	You	|
+|     In this code is a trick to use more than just 4   |
+| timers in robotC. You just declare some unsigned long |
+| variables (like "timeStart" or "timeRefresh") and add |
+| the delta time to them every time the code loops.	You |
 | can have as many of these as you want. They are quite |
-| accurate, but probably not perfect. RobotC should run	|
-| a heavy loop in under 6 MS, so that is the max error	|
-| that the Fake Timer will have. The reason that the	|
-| delta time is added, is so that you can reset the		|
-| fake timer by setting it to 0. E.g. timeStart=0;		|
-|     BTW, the fake timers could backfire if your code	|
-| loops in under 1 MS. The delta time would be 0, which	|
-| would add nothing to the fake timers and then reset	|
-| the real timer. To fix this, a minimum loop time has	|
-| been implemented. Also, minimum loop time keeps PID	|
-| controllers more accurate (because I and D need time	|
-| consistency or the deltatime multiplied in).			|
-|     Feel free to use these tricks in your code. If	|
-| you want to give credit, that's great, but it's not	|
-| required.												|
+| accurate, but probably not perfect. RobotC should run |
+| a heavy loop in under 6 MS, so that is the max error  |
+| that the Fake Timer will have. The reason that the    |
+| delta time is added, is so that you can reset the	    |
+| fake timer by setting it to 0. E.g. timeStart=0;	    |
+|     BTW, the fake timers could backfire if your code  |
+| loops in under 1 MS. The delta time would be 0, which |
+| would add nothing to the fake timers and then reset   |
+| the real timer. To fix this, a minimum loop time has  |
+| been implemented. Also, minimum loop time keeps PID   |
+| controllers more accurate (because I and D need time  |
+| consistency or the deltatime multiplied in).          |
+|     Feel free to use these tricks in your code. If    |
+| you want to give credit, that's great, but it's not   |
+| required.                                             |
 +-------------------------------------------------------+  */
-#define NO_MAIN			2 //NO means Number Of
-#define NO_MID			3
-#define NO_BUCKY			3
-#define NO_LARGE			4
-#define NO_ROBOT			3
-#define NO_BUCKYOBJS		10
-#define NO_LARGEOBJS		4
-#define BTNNEXTTIME		650	//If you hold a button to go to the next item it will auto-repeat after this many MS
-#define BTNLOOPTIME		2000	//If you hold a button to loop through the menu again it will auto-repeat after this many MS
-#define BTNADDTIME		350	//If you hold a button to add or subtract the current value it will auto-repeat after this many MS
-#define MINLOOPTIME		2		//For full vex code, this might be 3 or 4.
-#define MODEINPUT		0
-#define MODEDISPLAY		1
-#define MODERESTART		2
+#define NO_MAIN         2 //NO means Number Of
+#define NO_MID          3
+#define NO_BUCKY          3
+#define NO_LARGE          4
+#define NO_ROBOT          3
+#define NO_BUCKYOBJS      10
+#define NO_LARGEOBJS      4
+#define BTNNEXTTIME     650     //If you hold a button to go to the next item it will auto-repeat after this many MS
+#define BTNLOOPTIME     2000    //If you hold a button to loop through the menu again it will auto-repeat after this many MS
+#define BTNADDTIME      350     //If you hold a button to add or subtract the current value it will auto-repeat after this many MS
+#define MINLOOPTIME     2       //For full vex code, this might be 3 or 4.
+#define MODEINPUT       0
+#define MODEDISPLAY     1
+#define MODERESTART     2
 
 
 bool btnLeft=0;
@@ -62,15 +62,15 @@ string lastLine1="";
 string lastLine2="";
 unsigned long timeBtn=0;
 unsigned long timeT1;
-const string menuMain[NO_MAIN] =		{"Red","Blue"};										//COLOR
-const string menuMid[NO_MID] =		{"Bucky Balls","Large Balls","Robots"};				//TYPE
-const string menuBucky[NO_BUCKY] =	{"Middle Zone","Goal Zone","Stashed"};				//Bucky
-const string menuLarge[NO_LARGE] =	{"Middle Zone","Goal Zone","Stashed","Hanging"};	//Large
-const string menuRobot[NO_ROBOT] =	{"Low Hanging","High Hanging","Auton Bonus"};		//Robot
+const string menuMain[NO_MAIN] =    {"Red","Blue"};                                  //COLOR
+const string menuMid[NO_MID] =      {"Bucky Balls","Large Balls","Robots"};          //TYPE
+const string menuBucky[NO_BUCKY] =  {"Middle Zone","Goal Zone","Stashed"};           //Bucky
+const string menuLarge[NO_LARGE] =  {"Middle Zone","Goal Zone","Stashed","Hanging"}; //Large
+const string menuRobot[NO_ROBOT] =  {"Low Hanging","High Hanging","Auton Bonus"};    //Robot
 const char pointValues[3][4]={
-{1, 2,  5,  0},		//Bucky
-{1, 5,  10, 10},	//Large
-{5, 10, 10, 0}};	//Robot
+	{1, 2,  5,  0},   //Bucky
+	{1, 5,  10, 10},  //Large
+	{5, 10, 10, 0}};  //Robot
 
 /*
 	The Function init() initializes and resets.
@@ -247,14 +247,14 @@ void setLasts()
 	}
 
 /*
-The Function main() runs all of the code. It is
+	The Function main() runs all of the code. It is
 short and concise due to the code being split up into
 functions.
 Main() runs and infinite loop
 */
 task main()
 	{
-	while(1)
+	while(true)
 		{
 		init();
 		while(mode!=MODERESTART)
