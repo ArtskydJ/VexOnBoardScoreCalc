@@ -1,4 +1,4 @@
-/*						 +------------------------------+
+/*                       +------------------------------+
                          |   Toss Up Score Calculator   |
                          |     Joseph D.  Team 3018     |
                          |   2013-04-30    2013-05-01   |
@@ -6,13 +6,13 @@
 |     In this code is a trick to use more than just 4   |
 | timers in robotC. You just declare some unsigned long |
 | variables (like "timeStart" or "timeRefresh") and add |
-| the delta time to them every time the code loops.	You |
+| the delta time to them every time the code loops. You |
 | can have as many of these as you want. They are quite |
 | accurate, but probably not perfect. RobotC should run |
 | a heavy loop in under 6 MS, so that is the max error  |
 | that the Fake Timer will have. The reason that the    |
-| delta time is added, is so that you can reset the	    |
-| fake timer by setting it to 0. E.g. timeStart=0;	    |
+| delta time is added, is so that you can reset the     |
+| fake timer by setting it to 0. E.g. timeStart=0;      |
 |     BTW, the fake timers could backfire if your code  |
 | loops in under 1 MS. The delta time would be 0, which |
 | would add nothing to the fake timers and then reset   |
